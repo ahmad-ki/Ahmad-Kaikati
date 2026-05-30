@@ -2,16 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: smart-advisor-v3-backend
+  namespace: default
   labels:
-    app.kubernetes.io/name: smart-advisor-v3-backend
+    app: smart-advisor-v3-backend
     app.kubernetes.io/version: "3.0-enterprise"
 spec:
   replicas: 3
   selector:
-    matchLabels: { app: smart-advisor-v3-backend }
+    matchLabels:
+      app: smart-advisor-v3-backend
   strategy:
     type: RollingUpdate
-    rollingUpdate: { maxSurge: 1, maxUnavailable: 0 }
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
@@ -22,19 +26,43 @@ spec:
       - name: backend
         image: ahmadki123/smart-advisor-v3-backend:v3.0
         imagePullPolicy: Always
-        ports: [{ containerPort: 3000 }]
+        ports:
+        - containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smart-advisor-v3-backend-svc
+  namespace: default
+spec:
+  selector:
+    app: smart-advisor-v3-backend
+  ports:
+  - name: http
+    port: 3000
+    targetPort: 3000
+  type: ClusterIP
+
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: smart-advisor-v3-frontend
+  namespace: default
   labels:
-    app.kubernetes.io/name: smart-advisor-v3-frontend
+    app: smart-advisor-v3-frontend
     app.kubernetes.io/version: "3.0-enterprise"
 spec:
   replicas: 2
   selector:
-    matchLabels: { app: smart-advisor-v3-frontend }
+    matchLabels:
+      app: smart-advisor-v3-frontend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
@@ -45,4 +73,20 @@ spec:
       - name: frontend
         image: ahmadki123/smart-advisor-v3-frontend:v3.0
         imagePullPolicy: Always
-        ports: [{ containerPort: 80 }]
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smart-advisor-v3-frontend-svc
+  namespace: default
+spec:
+  selector:
+    app: smart-advisor-v3-frontend
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  type: ClusterIP
