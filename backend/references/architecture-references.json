@@ -1,34 +1,385 @@
 {
   "AWS": {
+    "default": [
+      {
+        "title": "AWS Architecture Center",
+        "provider": "AWS",
+        "category": "General Architecture",
+        "description": "Official AWS Architecture Center for reference architectures, diagrams, design guidance, and best practices for AWS workloads.",
+        "url": "https://aws.amazon.com/architecture/",
+        "why": "Main AWS reference library."
+      },
+      {
+        "title": "AWS Reference Architecture Diagrams",
+        "provider": "AWS",
+        "category": "Reference Diagrams",
+        "description": "Official AWS library of reference architecture diagrams for common industry and technology scenarios.",
+        "url": "https://aws.amazon.com/architecture/reference-architecture-diagrams/",
+        "why": "Useful for official AWS diagram references."
+      },
+      {
+        "title": "AWS Well-Architected Framework",
+        "provider": "AWS",
+        "category": "Well-Architected",
+        "description": "Official AWS framework for secure, reliable, efficient, cost-optimized, operationally excellent, and sustainable workloads.",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+        "why": "Validates architecture decisions against AWS best practices."
+      }
+    ],
     "E-commerce": [
       {
         "title": "AWS Architecture Center",
         "provider": "AWS",
-        "description": "Official AWS reference architectures and Well-Architected guidance.",
+        "category": "General Architecture",
+        "description": "Official AWS Architecture Center for ecommerce and cloud-native architecture guidance.",
         "url": "https://aws.amazon.com/architecture/",
-        "why": "Relevant for AWS-native ecommerce and scalable web architectures."
+        "why": "Relevant for ecommerce architectures using CloudFront, ALB, EKS/ECS, RDS/Aurora, Redis, S3, and SQS."
+      },
+      {
+        "title": "AWS Reference Architecture Diagrams",
+        "provider": "AWS",
+        "category": "Reference Diagrams",
+        "description": "Official AWS architecture diagram library.",
+        "url": "https://aws.amazon.com/architecture/reference-architecture-diagrams/",
+        "why": "Useful for showing official AWS topology references."
+      }
+    ],
+    "CRM": [
+      {
+        "title": "AWS Architecture Center",
+        "provider": "AWS",
+        "category": "CRM Architecture",
+        "description": "Official AWS Architecture Center for scalable application architectures.",
+        "url": "https://aws.amazon.com/architecture/",
+        "why": "Relevant for CRM systems requiring API, database, cache, security, and reporting layers."
+      }
+    ],
+    "SaaS platform": [
+      {
+        "title": "AWS SaaS Factory",
+        "provider": "AWS",
+        "category": "SaaS Architecture",
+        "description": "AWS SaaS Factory resources for building SaaS platforms on AWS.",
+        "url": "https://aws.amazon.com/partners/programs/saas-factory/",
+        "why": "Relevant for SaaS tenant isolation, identity, scaling, and operational design."
+      },
+      {
+        "title": "AWS Well-Architected SaaS Lens",
+        "provider": "AWS",
+        "category": "SaaS Best Practices",
+        "description": "AWS Well-Architected guidance focused on SaaS workloads.",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/welcome.html",
+        "why": "Use for SaaS-specific architecture reviews."
+      }
+    ],
+    "Document processing": [
+      {
+        "title": "AWS Prescriptive Guidance",
+        "provider": "AWS",
+        "category": "Document Processing",
+        "description": "AWS implementation and architecture guidance for document processing and cloud workloads.",
+        "url": "https://docs.aws.amazon.com/prescriptive-guidance/",
+        "why": "Relevant for object storage, queues, workers, and processing pipelines."
+      }
+    ],
+    "Search system": [
+      {
+        "title": "Amazon OpenSearch Service Documentation",
+        "provider": "AWS",
+        "category": "Search",
+        "description": "Official AWS documentation for Amazon OpenSearch Service.",
+        "url": "https://docs.aws.amazon.com/opensearch-service/",
+        "why": "Use when workload requires search, indexing, log analytics, or observability."
       }
     ]
   },
   "Azure": {
+    "default": [
+      {
+        "title": "Azure Architecture Center",
+        "provider": "Azure",
+        "category": "General Architecture",
+        "description": "Official Microsoft Azure Architecture Center with reference architectures, design patterns, and cloud guidance.",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/",
+        "why": "Main Azure architecture reference library."
+      },
+      {
+        "title": "Browse Azure Architectures",
+        "provider": "Azure",
+        "category": "Reference Architectures",
+        "description": "Official Microsoft Learn page for Azure reference architectures, solution ideas, and workload diagrams.",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/browse/",
+        "why": "Provides exact official Azure architecture references."
+      },
+      {
+        "title": "Azure Well-Architected Framework",
+        "provider": "Azure",
+        "category": "Well-Architected",
+        "description": "Official Microsoft framework for reliability, security, cost optimization, operational excellence, and performance efficiency.",
+        "url": "https://learn.microsoft.com/en-us/azure/well-architected/",
+        "why": "Validates Azure architecture decisions against Microsoft best practices."
+      }
+    ],
     "E-commerce": [
       {
         "title": "Azure Architecture Center",
         "provider": "Azure",
-        "description": "Microsoft reference architectures and cloud design patterns.",
-        "url": "https://learn.microsoft.com/azure/architecture/",
-        "why": "Relevant for Azure AKS, Front Door, and enterprise identity patterns."
+        "category": "E-commerce Architecture",
+        "description": "Azure reference architecture library for scalable web applications and ecommerce workloads.",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/",
+        "why": "Relevant for Azure Front Door, Application Gateway, AKS, PostgreSQL, Redis, Blob Storage, and Service Bus."
+      }
+    ],
+    "CRM": [
+      {
+        "title": "Azure Architecture Center",
+        "provider": "Azure",
+        "category": "CRM Architecture",
+        "description": "Official Azure reference architecture guidance.",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/",
+        "why": "Relevant for CRM workloads using Microsoft Entra ID, Azure SQL/PostgreSQL, Redis, and App Gateway."
+      }
+    ],
+    "SaaS platform": [
+      {
+        "title": "Azure Multitenant Architecture Guide",
+        "provider": "Azure",
+        "category": "SaaS Architecture",
+        "description": "Azure guidance for multitenant SaaS workloads.",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/guide/multitenant/overview",
+        "why": "Relevant for SaaS tenant isolation, identity, shared services, and data partitioning."
+      }
+    ],
+    "Document processing": [
+      {
+        "title": "Azure AI Document Intelligence",
+        "provider": "Azure",
+        "category": "Document AI",
+        "description": "Official Microsoft documentation for Azure AI Document Intelligence.",
+        "url": "https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/",
+        "why": "Use when document extraction, OCR, or document processing is needed."
+      }
+    ],
+    "Search system": [
+      {
+        "title": "Azure AI Search Documentation",
+        "provider": "Azure",
+        "category": "Search",
+        "description": "Official Microsoft documentation for Azure AI Search.",
+        "url": "https://learn.microsoft.com/en-us/azure/search/",
+        "why": "Use for full-text search, vector search, indexing, and AI retrieval workloads."
       }
     ]
   },
   "GCP": {
+    "default": [
+      {
+        "title": "Google Cloud Architecture Center",
+        "provider": "GCP",
+        "category": "General Architecture",
+        "description": "Official Google Cloud Architecture Center with reference architectures, design guidance, deployment patterns, and best practices.",
+        "url": "https://cloud.google.com/architecture",
+        "why": "Main Google Cloud architecture reference library."
+      },
+      {
+        "title": "Google Cloud Well-Architected Framework",
+        "provider": "GCP",
+        "category": "Well-Architected",
+        "description": "Official Google Cloud framework for secure, resilient, high-performing, cost-effective workloads.",
+        "url": "https://cloud.google.com/architecture/framework",
+        "why": "Validates GCP architecture decisions against Google Cloud best practices."
+      },
+      {
+        "title": "Google Cloud Architecture Fundamentals",
+        "provider": "GCP",
+        "category": "Architecture Fundamentals",
+        "description": "Google Cloud fundamentals covering deployment archetypes, landing zones, reliability, and enterprise foundations.",
+        "url": "https://cloud.google.com/architecture/fundamentals",
+        "why": "Explains architecture foundations, hybrid, multicloud, and global deployment models."
+      }
+    ],
     "E-commerce": [
       {
         "title": "Google Cloud Architecture Center",
         "provider": "GCP",
-        "description": "Google Cloud reference architectures and framework guidance.",
+        "category": "E-commerce Architecture",
+        "description": "Google Cloud reference architecture guidance for scalable web applications.",
         "url": "https://cloud.google.com/architecture",
-        "why": "Relevant for GKE, Cloud CDN, Cloud SQL, and global load balancing."
+        "why": "Relevant for Cloud CDN, Cloud Load Balancing, GKE/Cloud Run, Cloud SQL, Memorystore, Pub/Sub, and Cloud Storage."
+      }
+    ],
+    "CRM": [
+      {
+        "title": "Google Cloud Architecture Center",
+        "provider": "GCP",
+        "category": "CRM Architecture",
+        "description": "Google Cloud architecture guidance for scalable business applications.",
+        "url": "https://cloud.google.com/architecture",
+        "why": "Relevant for CRM workloads using Cloud Run/GKE, Cloud SQL, Memorystore, Identity Platform, and Cloud Armor."
+      }
+    ],
+    "SaaS platform": [
+      {
+        "title": "Google Cloud Architecture Center",
+        "provider": "GCP",
+        "category": "SaaS Architecture",
+        "description": "Google Cloud architecture guidance for cloud-native platforms.",
+        "url": "https://cloud.google.com/architecture",
+        "why": "Relevant for SaaS workloads using GKE, Cloud Run, Cloud SQL, Pub/Sub, IAM, and Cloud Armor."
+      }
+    ],
+    "Document processing": [
+      {
+        "title": "Document AI Documentation",
+        "provider": "GCP",
+        "category": "Document AI",
+        "description": "Official Google Cloud documentation for Document AI.",
+        "url": "https://cloud.google.com/document-ai/docs",
+        "why": "Use when document extraction, OCR, classification, or AI-based processing is needed."
+      }
+    ],
+    "Search system": [
+      {
+        "title": "Vertex AI Search Documentation",
+        "provider": "GCP",
+        "category": "Search",
+        "description": "Official Google Cloud documentation for Vertex AI Search.",
+        "url": "https://cloud.google.com/generative-ai-app-builder/docs/enterprise-search-introduction",
+        "why": "Use when AI-powered enterprise search or retrieval is part of the architecture."
+      }
+    ]
+  },
+  "On-premise / Local": {
+    "default": [
+      {
+        "title": "Kubernetes Documentation",
+        "provider": "On-premise / Local",
+        "category": "Kubernetes",
+        "description": "Official Kubernetes documentation for cluster architecture, workloads, services, storage, networking, and operations.",
+        "url": "https://kubernetes.io/docs/home/",
+        "why": "Use for on-prem Kubernetes, kubeadm, k3s, and OpenShift-style deployment guidance."
+      },
+      {
+        "title": "CNCF Landscape",
+        "provider": "On-premise / Local",
+        "category": "Cloud Native Ecosystem",
+        "description": "CNCF landscape for observability, service mesh, storage, security, GitOps, and CI/CD.",
+        "url": "https://landscape.cncf.io/",
+        "why": "Useful for selecting production-grade open-source platform components."
+      },
+      {
+        "title": "OpenShift Documentation",
+        "provider": "On-premise / Local",
+        "category": "Enterprise Kubernetes",
+        "description": "Official OpenShift documentation for enterprise Kubernetes deployments.",
+        "url": "https://docs.openshift.com/",
+        "why": "Use when the recommendation includes OpenShift for enterprise on-prem Kubernetes."
+      }
+    ],
+    "E-commerce": [
+      {
+        "title": "Kubernetes Documentation",
+        "provider": "On-premise / Local",
+        "category": "On-prem E-commerce",
+        "description": "Official Kubernetes documentation for self-managed containerized workloads.",
+        "url": "https://kubernetes.io/docs/home/",
+        "why": "Relevant for ecommerce workloads running on k3s, kubeadm, OpenShift, HAProxy, PostgreSQL HA, Redis, and MinIO."
+      }
+    ],
+    "CRM": [
+      {
+        "title": "Keycloak Documentation",
+        "provider": "On-premise / Local",
+        "category": "Identity",
+        "description": "Official Keycloak documentation for self-hosted identity and access management.",
+        "url": "https://www.keycloak.org/documentation",
+        "why": "Relevant for CRM authentication, SSO, OIDC, and local identity management."
+      }
+    ],
+    "SaaS platform": [
+      {
+        "title": "Kubernetes Documentation",
+        "provider": "On-premise / Local",
+        "category": "On-prem SaaS",
+        "description": "Official Kubernetes documentation for scalable self-managed container platforms.",
+        "url": "https://kubernetes.io/docs/home/",
+        "why": "Relevant for SaaS platforms hosted on local Kubernetes, k3s, kubeadm, or OpenShift."
+      }
+    ],
+    "Document processing": [
+      {
+        "title": "MinIO Documentation",
+        "provider": "On-premise / Local",
+        "category": "Object Storage",
+        "description": "Official MinIO documentation for self-hosted S3-compatible object storage.",
+        "url": "https://min.io/docs/minio/linux/index.html",
+        "why": "Relevant for document and file upload workloads requiring local object storage."
+      }
+    ],
+    "Search system": [
+      {
+        "title": "OpenSearch Documentation",
+        "provider": "On-premise / Local",
+        "category": "Search",
+        "description": "Official OpenSearch documentation for self-hosted search and analytics.",
+        "url": "https://opensearch.org/docs/latest/",
+        "why": "Relevant for self-hosted search, indexing, logs, and analytics."
+      }
+    ]
+  },
+  "Hybrid": {
+    "default": [
+      {
+        "title": "Azure Hybrid and Multicloud Architecture",
+        "provider": "Hybrid",
+        "category": "Hybrid Architecture",
+        "description": "Microsoft Azure hybrid and multicloud architecture guidance.",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/browse/?terms=hybrid",
+        "why": "Useful for hybrid scenarios connecting on-prem workloads with Azure services."
+      },
+      {
+        "title": "AWS Hybrid Cloud",
+        "provider": "Hybrid",
+        "category": "Hybrid Architecture",
+        "description": "AWS hybrid cloud resources for connecting on-prem environments with AWS.",
+        "url": "https://aws.amazon.com/hybrid/",
+        "why": "Useful for hybrid designs using AWS cloud services with local infrastructure."
+      },
+      {
+        "title": "Google Cloud Hybrid and Multicloud",
+        "provider": "Hybrid",
+        "category": "Hybrid Architecture",
+        "description": "Google Cloud architecture guidance for hybrid and multicloud deployments.",
+        "url": "https://cloud.google.com/architecture/hybrid-multicloud",
+        "why": "Useful for hybrid and multicloud strategy, networking, identity, and deployment patterns."
+      }
+    ]
+  },
+  "Multi-cloud": {
+    "default": [
+      {
+        "title": "Google Cloud Hybrid and Multicloud Architecture",
+        "provider": "Multi-cloud",
+        "category": "Multicloud Architecture",
+        "description": "Google Cloud guidance for hybrid and multicloud deployment patterns.",
+        "url": "https://cloud.google.com/architecture/hybrid-multicloud",
+        "why": "Use for multi-cloud topology, identity, networking, and operational considerations."
+      },
+      {
+        "title": "Azure Hybrid and Multicloud Architecture",
+        "provider": "Multi-cloud",
+        "category": "Multicloud Architecture",
+        "description": "Azure architecture guidance related to hybrid and multicloud patterns.",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/browse/?terms=hybrid",
+        "why": "Useful for Azure-based multicloud and hybrid reference patterns."
+      },
+      {
+        "title": "AWS Architecture Center",
+        "provider": "Multi-cloud",
+        "category": "Cloud Architecture",
+        "description": "AWS architecture reference guidance for cloud workloads.",
+        "url": "https://aws.amazon.com/architecture/",
+        "why": "Useful when AWS is one of the providers in a multi-cloud design."
       }
     ]
   }
