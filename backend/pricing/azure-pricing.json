@@ -1,0 +1,35 @@
+{
+  "region": "eastus",
+  "currency": "USD",
+  "compute": {
+    "small": 0.049,
+    "medium": 0.141,
+    "large": 0.41,
+    "enterprise": 0.82
+  },
+  "database": {
+    "small": 50,
+    "medium": 200,
+    "large": 690,
+    "enterprise": 2100
+  },
+  "storagePerGb": 0.0208,
+  "egressPerGb": 0.087,
+  "loadBalancer": 28,
+  "cdnBase": 28,
+  "cache": {
+    "small": 42,
+    "medium": 145,
+    "large": 450,
+    "enterprise": 880
+  },
+  "queue": {
+    "basic": 10,
+    "managed": 58,
+    "streaming": 260
+  },
+  "monitoringPerPod": 3.2,
+  "backupPercent": 0.14,
+  "waf": 35,
+  "kubernetesControlPlane": 0
+}

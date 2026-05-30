@@ -1,0 +1,35 @@
+{
+  "AWS": {
+    "E-commerce": [
+      {
+        "title": "AWS Architecture Center",
+        "provider": "AWS",
+        "description": "Official AWS reference architectures and Well-Architected guidance.",
+        "url": "https://aws.amazon.com/architecture/",
+        "why": "Relevant for AWS-native ecommerce and scalable web architectures."
+      }
+    ]
+  },
+  "Azure": {
+    "E-commerce": [
+      {
+        "title": "Azure Architecture Center",
+        "provider": "Azure",
+        "description": "Microsoft reference architectures and cloud design patterns.",
+        "url": "https://learn.microsoft.com/azure/architecture/",
+        "why": "Relevant for Azure AKS, Front Door, and enterprise identity patterns."
+      }
+    ]
+  },
+  "GCP": {
+    "E-commerce": [
+      {
+        "title": "Google Cloud Architecture Center",
+        "provider": "GCP",
+        "description": "Google Cloud reference architectures and framework guidance.",
+        "url": "https://cloud.google.com/architecture",
+        "why": "Relevant for GKE, Cloud CDN, Cloud SQL, and global load balancing."
+      }
+    ]
+  }
+}

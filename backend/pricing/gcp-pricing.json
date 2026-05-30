@@ -1,0 +1,35 @@
+{
+  "region": "us-central1",
+  "currency": "USD",
+  "compute": {
+    "small": 0.038,
+    "medium": 0.126,
+    "large": 0.36,
+    "enterprise": 0.74
+  },
+  "database": {
+    "small": 52,
+    "medium": 205,
+    "large": 700,
+    "enterprise": 2400
+  },
+  "storagePerGb": 0.02,
+  "egressPerGb": 0.085,
+  "loadBalancer": 30,
+  "cdnBase": 24,
+  "cache": {
+    "small": 40,
+    "medium": 135,
+    "large": 430,
+    "enterprise": 850
+  },
+  "queue": {
+    "basic": 9,
+    "managed": 50,
+    "streaming": 190
+  },
+  "monitoringPerPod": 3.0,
+  "backupPercent": 0.13,
+  "waf": 28,
+  "kubernetesControlPlane": 74
+}
