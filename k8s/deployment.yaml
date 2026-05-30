@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: arch-builder-backend
+  name: smart-advisor-v3-backend
   labels:
-    app.kubernetes.io/name: arch-builder-backend
+    app.kubernetes.io/name: smart-advisor-v3-backend
     app.kubernetes.io/version: "3.0-enterprise"
 spec:
   replicas: 3
   selector:
-    matchLabels: { app: arch-builder-backend }
+    matchLabels: { app: smart-advisor-v3-backend }
   strategy:
     type: RollingUpdate
     rollingUpdate: { maxSurge: 1, maxUnavailable: 0 }
   template:
     metadata:
       labels:
-        app: arch-builder-backend
+        app: smart-advisor-v3-backend
         app.kubernetes.io/version: "3.0-enterprise"
     spec:
       containers:
@@ -27,18 +27,18 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: arch-builder-frontend
+  name: smart-advisor-v3-frontend
   labels:
-    app.kubernetes.io/name: arch-builder-frontend
+    app.kubernetes.io/name: smart-advisor-v3-frontend
     app.kubernetes.io/version: "3.0-enterprise"
 spec:
   replicas: 2
   selector:
-    matchLabels: { app: arch-builder-frontend }
+    matchLabels: { app: smart-advisor-v3-frontend }
   template:
     metadata:
       labels:
-        app: arch-builder-frontend
+        app: smart-advisor-v3-frontend
         app.kubernetes.io/version: "3.0-enterprise"
     spec:
       containers:
