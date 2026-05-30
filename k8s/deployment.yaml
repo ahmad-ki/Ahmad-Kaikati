@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: ahmadki123/arch-builder-backend:v3.0
+        image: ahmadki123/smart-advisor-v3-backend:v3.0
         imagePullPolicy: Always
         ports: [{ containerPort: 3000 }]
 ---
@@ -43,6 +43,6 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: ahmadki123/arch-builder-frontend:v3.0
+        image: ahmadki123/smart-advisor-v3-frontend:v3.0
         imagePullPolicy: Always
         ports: [{ containerPort: 80 }]
