@@ -1,12 +1,45 @@
-function generateDockerCompose(input){return `version: "3.9"
+function generateDockerCompose(input = {}) {
+  const name = (input.appType || 'smart-advisor-app')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '-');
+
+  return `version: "3.9"
+
 services:
   frontend:
-    image: yourdockerhub/frontend:v3.0
-    ports: ["80:80"]
+    image: yourdockerhub/${name}-frontend:v3.3
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
   backend:
-    image: yourdockerhub/backend:v3.0
-    ports: ["3000:3000"]
+    image: yourdockerhub/${name}-backend:v3.3
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+
   redis:
-    image: redis:7
-`;}
-module.exports={generateDockerCompose};
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: change-me
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+`;
+}
+
+module.exports = {
+  generateDockerCompose
+};

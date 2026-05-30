@@ -420,4 +420,134 @@ function finish(lines, diagramType, providerStyle) {
   };
 }
 
-module.exports = { buildDiagram };
+
+module.exports = {
+  buildDiagram,
+  buildEnhancedProviderDiagram
+};
+
+
+function buildEnhancedProviderDiagram(input = {}, provider = 'AWS', svc = {}, deployment = {}, sizing = {}) {
+  const icons = PROVIDER_ICON_MAP[provider] || PROVIDER_ICON_MAP.AWS;
+
+  const compute = cleanMermaidLabel(svc.compute || svc.service_compute || icons.compute);
+  const database = cleanMermaidLabel(svc.database || svc.service_db || icons.db);
+  const cache = cleanMermaidLabel(svc.cache || svc.service_cache || icons.cache);
+  const queue = cleanMermaidLabel(svc.queue || svc.service_queue || icons.queue);
+  const storage = cleanMermaidLabel(svc.storage || svc.service_storage || icons.storage);
+  const monitoring = cleanMermaidLabel(svc.monitoring || svc.service_monitoring || icons.monitoring);
+  const secrets = cleanMermaidLabel(svc.secrets || svc.service_secrets || icons.security);
+  const waf = cleanMermaidLabel(svc.waf || svc.service_waf || icons.waf);
+
+  const backendUnits =
+    sizing.backend_pods ||
+    sizing.container_tasks ||
+    sizing.vm_instances ||
+    1;
+
+  const nodeCount =
+    sizing.node_count ||
+    sizing.vm_instances ||
+    1;
+
+  const needReplica = ['99.9%', '99.99%'].includes(input.sla);
+  const needDr = input.region === 'global' || input.sla === '99.99%';
+
+  const lines = [
+    'flowchart TD',
+    '  %% Smart Architecture Advisor enhanced provider diagram',
+
+    '  USER(["👥 Users / Clients"])',
+
+    '',
+    '  subgraph EDGE["🌍 Edge & Access Layer"]',
+    `    DNS["${icons.dns}"]`,
+    `    CDN["${icons.cdn}"]`,
+    `    WAF["${waf}"]`,
+    '  end',
+
+    '',
+    '  subgraph NETWORK["🕸️ Network & Security Boundary"]',
+    `    LB["${icons.lb}"]`,
+    `    NETSEC["${icons.network}"]`,
+    '  end',
+
+    '',
+    '  subgraph COMPUTE["⚙️ Application / Compute Layer"]',
+    `    RUNTIME["🚀 ${compute}"]`,
+    `    WORKLOAD["📦 Workload Units: ${backendUnits}"]`,
+    `    NODES["🖥️ Nodes / VMs: ${nodeCount}"]`,
+    '    WORKERS["🔧 Background Workers"]',
+    '  end',
+
+    '',
+    '  subgraph DATA["🗄️ Data & Integration Layer"]',
+    `    DB[("🗄️ ${database}")]`,
+    `    CACHE[("⚡ ${cache}")]`,
+    `    QUEUE["📨 ${queue}"]`,
+    `    OBJ[("📦 ${storage}")]`,
+    '  end',
+
+    '',
+    '  subgraph OPS["📊 Security, Observability & Backup"]',
+    `    SEC["${secrets}"]`,
+    `    OBS["${monitoring}"]`,
+    `    BACKUP["${icons.backup}"]`,
+    '  end',
+
+    '',
+    '  USER --> DNS --> CDN --> WAF --> LB',
+    '  LB --> NETSEC',
+    '  LB --> RUNTIME',
+    '  RUNTIME --> WORKLOAD',
+    '  RUNTIME --> NODES',
+    '  WORKLOAD --> DB',
+    '  WORKLOAD --> CACHE',
+    '  WORKLOAD --> QUEUE',
+    '  WORKLOAD --> OBJ',
+    '  QUEUE --> WORKERS',
+    '  WORKERS --> DB',
+    '  WORKLOAD --> SEC',
+    '  WORKLOAD --> OBS',
+    '  DB --> BACKUP'
+  ];
+
+  if (needReplica) {
+    lines.push('  DB --> DBR[("🔁 HA Replica / Standby")]');
+  }
+
+  if (needDr) {
+    lines.push(`  DBR --> DR[("${icons.dr}")]`);
+  }
+
+  if (provider === 'Hybrid') {
+    lines.push('  RUNTIME --> LINK["🔗 Private Connectivity"]');
+    lines.push('  LINK --> ONPREM[("🏢 On-prem Data / Legacy Systems")]');
+  }
+
+  if (provider === 'Multi-cloud') {
+    lines.push('  CDN --> PRIMARY["☁️ Primary Cloud"]');
+    lines.push('  CDN --> SECONDARY["☁️ DR Cloud"]');
+    lines.push('  PRIMARY --> ANALYTICS["☁️ Analytics / AI Cloud"]');
+  }
+
+  lines.push(
+    '',
+    '  classDef edge fill:#0d2b45,stroke:#5b8dee,color:#eaf2ff,stroke-width:1px;',
+    '  classDef app fill:#12351f,stroke:#36c98e,color:#eaf2ff,stroke-width:1px;',
+    '  classDef data fill:#2d1740,stroke:#b070e0,color:#fff,stroke-width:1px;',
+    '  classDef ops fill:#40200d,stroke:#f0a050,color:#fff,stroke-width:1px;',
+    '  class USER,DNS,CDN,WAF,LB,NETSEC edge;',
+    '  class RUNTIME,WORKLOAD,NODES,WORKERS,PRIMARY,SECONDARY,ANALYTICS app;',
+    '  class DB,CACHE,QUEUE,OBJ,DBR,DR,ONPREM data;',
+    '  class SEC,OBS,BACKUP ops;'
+  );
+
+  return {
+    mermaid: lines.join('\n'),
+    providerStyle: `${provider} enhanced provider-style architecture diagram`,
+    diagramType: provider.toLowerCase().replace(/[^a-z]/g, ''),
+    nodes: [],
+    edges: []
+  };
+}

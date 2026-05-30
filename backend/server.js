@@ -3,6 +3,7 @@ const cors = require('cors');
 
 const { VERSION } = require('./utils/constants');
 const { normalizeInput } = require('./utils/normalizeInput');
+
 const { calculateSizing } = require('./engines/sizingEngine');
 const { recommendDeployment } = require('./engines/deploymentEngine');
 const { scoreProviders } = require('./engines/scoringEngine');
@@ -33,33 +34,64 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+function resolveSelectedCloud(input, scoring) {
+  if (!input.cloud || input.cloud === 'Best fit (auto)') {
+    return scoring.selected || 'AWS';
+  }
+
+  return input.cloud;
+}
+
+function normalizeProviderKey(selectedCloud) {
+  if (selectedCloud === 'Hybrid') return 'Hybrid';
+  if (selectedCloud === 'Multi-cloud') return 'Multi-cloud';
+  if (selectedCloud === 'On-premise / Local') return 'On-premise / Local';
+  if (selectedCloud === 'Azure') return 'Azure';
+  if (selectedCloud === 'GCP') return 'GCP';
+
+  return 'AWS';
+}
+
+function getProviderModule(providerKey) {
+  const providerModule = providers[providerKey];
+
+  if (!providerModule || typeof providerModule.serviceMap !== 'function') {
+    throw new Error(`Provider module not found or invalid for provider: ${providerKey}`);
+  }
+
+  return providerModule;
+}
+
 function computeArchitectureV3(raw) {
   const input = normalizeInput(raw);
+
   const deployment = recommendDeployment(input);
   const scoring = scoreProviders(input);
 
-  const selectedCloud =
-    input.cloud === 'Best fit (auto)' ? scoring.selected : input.cloud;
+  const selectedCloud = resolveSelectedCloud(input, scoring);
+  const providerKey = normalizeProviderKey(selectedCloud);
 
-  const providerKey =
-    selectedCloud === 'Hybrid'
-      ? 'Hybrid'
-      : selectedCloud === 'Multi-cloud'
-      ? 'Multi-cloud'
-      : selectedCloud;
+  const providerModule = getProviderModule(providerKey);
 
   const size = calculateSizing(input, providerKey, deployment);
-  const svc = providers[providerKey].serviceMap(input, deployment);
+  const svc = providerModule.serviceMap(input, deployment);
+
   const cost = estimateCost(input, providerKey, deployment, size);
+
+  /*
+   * Important for v3.3:
+   * buildDiagram receives deployment and size.
+   */
   const diagram = buildDiagram(input, providerKey, svc, deployment, size);
+
   const security = securityDesign(providerKey, svc, input);
   const dr = drPlan(input, svc);
   const refs = getReferences(providerKey, input.appType);
 
   const iac = {
     kubernetes: generateKubernetes(input, svc, size),
-    dockerCompose: generateDockerCompose(input),
-    terraform: generateTerraform(providerKey),
+    dockerCompose: generateDockerCompose(input, svc, size),
+    terraform: generateTerraform(providerKey, input, svc, size),
     helm: generateHelm(input, size),
     githubActions: generateGithubActions()
   };
@@ -95,6 +127,7 @@ function computeArchitectureV3(raw) {
 
   const cloud = {
     provider: svc.provider,
+
     service_compute: svc.compute,
     service_db: svc.database,
     service_cache: svc.cache,
@@ -130,20 +163,28 @@ function computeArchitectureV3(raw) {
       selectedCloud: providerKey,
       deploymentModel: deployment.model,
       architectureStyle: input.architecture,
-      reasoning: [deployment.reason, ...(scoring.reasoning || [])]
+      reasoning: [
+        deployment.reason,
+        ...(scoring.reasoning || [])
+      ]
     },
 
-    scores: scoring.scores,
+    scores: scoring.scores || {},
+
     arch,
     cloud,
     deployment,
+
     sizing: size,
     cost,
     diagram,
+
     references: refs,
     security,
     dr,
+
     iac,
+
     recommendations: recs,
     summary,
 
@@ -163,9 +204,13 @@ app.post('/api/architecture', (req, res) => {
   try {
     const result = computeArchitectureV3(req.body);
     res.json(result);
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: e.message });
+  } catch (error) {
+    console.error('Architecture generation failed:', error);
+
+    res.status(500).json({
+      error: error.message,
+      version: VERSION
+    });
   }
 });
 
@@ -173,17 +218,21 @@ app.post('/api/architecture/v1', (req, res) => {
   try {
     const result = computeArchitectureV3(req.body);
     res.json(result);
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: e.message });
+  } catch (error) {
+    console.error('Architecture generation failed:', error);
+
+    res.status(500).json({
+      error: error.message,
+      version: VERSION
+    });
   }
 });
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () =>
-  console.log(`Smart Architecture Advisor ${VERSION} running on :${PORT}`)
-);
+app.listen(PORT, () => {
+  console.log(`Smart Architecture Advisor ${VERSION} running on :${PORT}`);
+});
 
 module.exports = {
   computeArchitectureV3

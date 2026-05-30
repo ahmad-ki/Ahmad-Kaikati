@@ -19,4 +19,3 @@ function getReferences(provider, appType) {
 module.exports = {
   getReferences,
 };
-``

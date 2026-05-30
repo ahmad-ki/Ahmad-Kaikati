@@ -296,7 +296,10 @@ function calculateSizing(input = {}, selectedCloud = 'AWS', deployment = {}) {
     vmInstances = 0;
   }
 
-  const hpaMin = deploymentModel === 'Serverless' ? 0 : backendPods || vmInstances || containerTasks || 1;
+  const hpaMin =
+    deploymentModel === 'Serverless'
+      ? 0
+      : backendPods || vmInstances || containerTasks || 1;
 
   const hpaMax =
     deploymentModel === 'Serverless'
@@ -366,7 +369,7 @@ function calculateSizing(input = {}, selectedCloud = 'AWS', deployment = {}) {
     ]
   };
 
-  // camelCase compatibility for frontend
+  // camelCase compatibility
   sizing.scaleTier = sizing.scale_tier;
   sizing.computeFamily = sizing.compute_family;
   sizing.recommendedInstance = sizing.recommended_instance;
