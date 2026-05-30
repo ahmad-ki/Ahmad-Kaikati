@@ -5,7 +5,7 @@ metadata:
   namespace: default
   labels:
     app: smart-advisor-v3-backend
-    app.kubernetes.io/version: "3.0-enterprise"
+    app.kubernetes.io/version: "3.1-enterprise"
 spec:
   replicas: 3
   selector:
@@ -20,11 +20,11 @@ spec:
     metadata:
       labels:
         app: smart-advisor-v3-backend
-        app.kubernetes.io/version: "3.0-enterprise"
+        app.kubernetes.io/version: "3.1-enterprise"
     spec:
       containers:
       - name: backend
-        image: ahmadki123/smart-advisor-v3-backend:v3.0
+        image: ahmadki123/smart-advisor-v3-backend:v3.1
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
